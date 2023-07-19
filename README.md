@@ -3,7 +3,7 @@
 Team:
 
 * Evelyn Zhang - Shoes microservice
-* Person 2 - Which microservice?
+* Eluron Osiebo - Hats microservice
 
 ## Design
 
