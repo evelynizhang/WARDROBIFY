@@ -16,11 +16,7 @@ class Shoe(models.Model):
         BinVO,
         related_name="shoes",
         on_delete=models.CASCADE,
-<<<<<<< HEAD
-        null=True,
-=======
         null=True
->>>>>>> main
     )
 
     def __str__(self):
