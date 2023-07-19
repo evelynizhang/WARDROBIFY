@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 class BinVODetailEncoder(ModelEncoder):
     model = BinVO
-    properties = ["closet_name", "bin_number", "bin_size"]
+    properties = ["closet_name", "bin_number", "bin_size", "import_href"]
 
 class ShoeDetailEncoder(ModelEncoder):
     model = Shoe
@@ -35,8 +35,9 @@ def api_list_shoes(request, bin_vo_id=None):
     else:
         content = json.loads(request.body)
         try:
-            bin_href = content["bin"]
+            bin_href = content["bin"]["import_href"]
             bin = BinVO.objects.get(import_href=bin_href)
+            print(BinVO.objects.all())
             content["bin"] = bin
         except BinVO.DoesNotExist:
             return JsonResponse(
@@ -45,3 +46,30 @@ def api_list_shoes(request, bin_vo_id=None):
 
         shoe = Shoe.objects.create(**content)
         return JsonResponse(shoe, encoder=ShoeDetailEncoder,safe=False,)
+
+
+@ require_http_methods(["GET", "PUT", "DELETE"])
+def api_show_shoes(request, pk):
+    if request.method == "GET":
+        shoes = Shoe.objects.get(id=pk)
+        return JsonResponse(
+            {"shoes": shoes}, encoder=BinVODetailEncoder, safe=False,
+        )
+
+    elif request.method == "DELETE":
+        count, _ = Shoe.objects.filter(id=pk).delete()
+        return JsonResponse({"delete": count > 0})
+
+    else:
+        content = json.loads(request.body)
+        try:
+            if "bin" in content:
+                bin = BinVO.objects.get(id=content["bin"])
+                content["bin"] = bin
+        except BinVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "invaild bin id"}, status-400
+            )
+        Shoe.objects.filter(id=pk).update(**content)
+        shoes = Shoe.object.get(id=pk)
+        return JsonResponse(shoes, encoder=BinVODetailEncoder, safe=False)
