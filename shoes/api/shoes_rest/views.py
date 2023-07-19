@@ -15,7 +15,7 @@ class BinVODetailEncoder(ModelEncoder):
 class ShoeDetailEncoder(ModelEncoder):
     model = Shoe
     properties = [
-        "brand","size","color","bin",
+        "manufacturer","model_name","color","url", "bin","id"
     ]
     encoders={
         "bin": BinVODetailEncoder(),
@@ -24,7 +24,7 @@ class ShoeDetailEncoder(ModelEncoder):
 class ShoeListEncoder(ModelEncoder):
     model = Shoe
     properties = [
-        "brand","size","color"
+        "manufacturer","model_name","color","url"
     ]
 
 @require_http_methods(["GET", "POST"])
