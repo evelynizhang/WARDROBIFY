@@ -15,7 +15,7 @@ class Shoe(models.Model):
     color = models.CharField(max_length=200)
     bin = models.ForeignKey(
         BinVO,
-        related_name=“shoes”,
+        related_name="shoes",
         on_delete=models.CASCADE,
         null=True
     )
