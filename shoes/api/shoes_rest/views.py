@@ -21,6 +21,11 @@ class ShoeDetailEncoder(ModelEncoder):
         "bin": BinVODetailEncoder(),
     }
 
+class ShoeListEncoder(ModelEncoder):
+    model = Shoe
+    properties = [
+        "brand","size","color"
+    ]
 
 @require_http_methods(["GET", "POST"])
 def api_list_shoes(request, bin_vo_id=None):
@@ -30,7 +35,7 @@ def api_list_shoes(request, bin_vo_id=None):
         else:
             shoes = Shoe.objects.all()
         return JsonResponse(
-            {"shoes": shoes}, encoder=BinVODetailEncoder,
+            {"shoes": shoes}, encoder=ShoeListEncoder,
         )
     else:
         content = json.loads(request.body)
@@ -53,7 +58,7 @@ def api_show_shoes(request, pk):
     if request.method == "GET":
         shoes = Shoe.objects.get(id=pk)
         return JsonResponse(
-            {"shoes": shoes}, encoder=BinVODetailEncoder, safe=False,
+            {"shoes": shoes}, encoder=ShoeDetailEncoder, safe=False,
         )
 
     elif request.method == "DELETE":
@@ -64,12 +69,12 @@ def api_show_shoes(request, pk):
         content = json.loads(request.body)
         try:
             if "bin" in content:
-                bin = BinVO.objects.get(id=content["bin"])
+                bin = BinVO.objects.get(import_href=content["bin"]["import_href"])
                 content["bin"] = bin
         except BinVO.DoesNotExist:
             return JsonResponse(
-                {"message": "invaild bin id"}, status-400
+                {"message": "invaild bin id"}, status=400
             )
         Shoe.objects.filter(id=pk).update(**content)
-        shoes = Shoe.object.get(id=pk)
-        return JsonResponse(shoes, encoder=BinVODetailEncoder, safe=False)
+        shoes = Shoe.objects.get(id=pk)
+        return JsonResponse(shoes, encoder=ShoeDetailEncoder, safe=False)
