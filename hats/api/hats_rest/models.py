@@ -1,5 +1,3 @@
-# hats/api/hats_rest/models.py
-
 from django.db import models
 
 
