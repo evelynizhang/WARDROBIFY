@@ -11,6 +11,18 @@ django.setup()
 
 # Import models from hats_rest, here.
 # from hats_rest.models import Something
+from hats_rest.models import LocationVO
+
+def get_locations():
+    response = requests.get("http://wardrobe-api:8000/api/locations/")
+    content = json.loads(response.content)
+    for location in content["locations"]:
+        LocationVO.objects.update_or_create(
+            import_href=location["href"],
+            name=location["closet_name"],
+            description=location["section_number"],
+            # You may need to adjust the field names above based on your actual models.
+        )
 
 def poll():
     while True:
