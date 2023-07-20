@@ -25,6 +25,9 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to="/hats">Hats</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/hatform">Hats Form</NavLink>
+            </li>
           </ul>
         </div>
       </div>

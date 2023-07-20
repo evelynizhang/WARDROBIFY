@@ -21,9 +21,9 @@ def get_locations():
             import_href=location["href"],
             name=location["closet_name"],
             description=location["section_number"],
-            # You may need to adjust the field names above based on your actual models.
-        )
 
+        )
+print(LocationVO.objects.all())
 def poll():
     while True:
         print('Hats poller polling for data')

@@ -56,8 +56,9 @@ def api_create_hat(request):
 
     try:
         location_href = content["wardrobe_location"]
+        print(location_href)
         location = LocationVO.objects.get(import_href=location_href)
-
+        print(location)
         hat = Hat.objects.create(
             fabric=content["fabric"],
             style_name=content["style_name"],
