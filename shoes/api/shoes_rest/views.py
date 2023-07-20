@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 class BinVODetailEncoder(ModelEncoder):
     model = BinVO
-    properties = ["closet_name", "bin_number", "bin_size", "import_href"]
+    properties = ["closet_name", "import_href"]
 
 class ShoeDetailEncoder(ModelEncoder):
     model = Shoe
@@ -24,7 +24,7 @@ class ShoeDetailEncoder(ModelEncoder):
 class ShoeListEncoder(ModelEncoder):
     model = Shoe
     properties = [
-        "manufacturer","model_name","color","url","id"
+        "manufacturer","model_name","color","id"
     ]
 
 @require_http_methods(["GET", "POST"])
@@ -40,9 +40,7 @@ def api_list_shoes(request, bin_vo_id=None):
     else:
         content = json.loads(request.body)
         try:
-            print(content)
             bin_href = content["bin"]["import_href"]
-
             bin = BinVO.objects.get(import_href=bin_href)
             content["bin"] = bin
         except BinVO.DoesNotExist:
