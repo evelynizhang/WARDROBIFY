@@ -1,54 +1,41 @@
-window.addEventListener('DOMContentLoaded', async () => {
-  const url = 'http://localhost:8080/api/shoes/';
+import React, { useState, useEffect } from "react";
 
 
-  try {
-    const response = await fetch(url);
+function Shoes() {
+  const[shoes, setShoes] = useState([])
 
-    if (!response.ok) {
-      // Figure out what to do when the response is bad
-      console.log("Erroe")
-    } else {
-      const data = await response.json();
+  const getData = async () => {
+    const url = "http://localhost:8080/api/shoes/";
+    const response = await fetch(url)
 
-      for (let shoe of data.shoes) {
-      // const shoe = data.shoes[3]
-      const manufacturerTag = document.querySelector(".card-title")
-      manufacturerTag.innerHTML = shoe.manufacturer
-
-      const colorTag = document.querySelector(".card-text")
-      colorTag.innerHTML = shoe.color
-
-      const imgTag = document.querySelector(".card-img-top")
-      imgTag.src = shoe.url;
-
-
-      const detailUrl = "http://localhost:8080${shoe.href}"
-      const detailResponse = await fetch(detailUrl);
-      if (detailResponse.ok) {
-        const details = await detailResponse.json();
-        console.log(details);
-      }
-      const imageTag = shoe.url
-      console.log(imageTag)
+    if (response.ok) {
+      const data = await response.json()
+      setShoes(data.shoes)
     }
-  }} catch (e) {
-    // Figure out what to do if an error is raised
-
   }
-});
+  useEffect(() => {
+    getData()
+  }, [])
 
-
-function Shoes () {
   return (
-    <div className="card">
-        <img src="..." className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title">Shoe Manufacturer</h5>
-          <p className="card-text">Shoe Color</p>
-        </div>
-      </div>
-  )
+    <div className="row row-cols-1 row-cols-md-3 g-4">
+        {shoes.map(shoe => {
+          const u = shoe.url
+            return (
+              <div key={shoe.href} className="col">
+                <div class="card">
+                  <img src={u} className="card-img-top" alt="shoe" />
+                  <div className="card-body">
+                    <h5 className="card-title">{ shoe.manufacturer }</h5>
+                    <p className="card-text">{ shoe.color }</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+    </div>
+    )
 }
+
 
 export default Shoes;

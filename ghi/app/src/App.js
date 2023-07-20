@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
 import ShoesList from "./shoesList";
-import Shoes from "./shoes";
+import Shoes from "./Shoes";
+
 
 function App(props) {
   return (
@@ -14,6 +15,9 @@ function App(props) {
           <Route path="/shoes" element={<Shoes />} />
           <Route path="shoeslist">
             <Route index element={<ShoesList />} />
+          </Route>
+          <Route path="shoescard">
+            <Route index element={<Shoes />} />
           </Route>
         </Routes>
       </div>
