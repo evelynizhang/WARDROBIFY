@@ -40,9 +40,10 @@ def api_list_shoes(request, bin_vo_id=None):
     else:
         content = json.loads(request.body)
         try:
+            print(content)
             bin_href = content["bin"]["import_href"]
+
             bin = BinVO.objects.get(import_href=bin_href)
-            print(BinVO.objects.all())
             content["bin"] = bin
         except BinVO.DoesNotExist:
             return JsonResponse(
