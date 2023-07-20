@@ -4,9 +4,6 @@ import Nav from './Nav';
 import ShoesList from "./shoesList";
 
 function App(props) {
-  if (props === undefined) {
-    return null;
-  }
   return (
     <BrowserRouter>
       <Nav />
@@ -14,7 +11,7 @@ function App(props) {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="shoeslist">
-            <Route path="" element={<ShoesList />} />
+            <Route index element={<ShoesList />} />
           </Route>
         </Routes>
       </div>
