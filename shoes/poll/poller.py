@@ -25,7 +25,6 @@ def get_bins():
             bin_size=bin["bin_size"],
         )
 
-
 def poll():
     while True:
         print('Shoes poller polling for data')

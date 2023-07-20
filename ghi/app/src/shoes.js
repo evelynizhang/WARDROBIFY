@@ -17,19 +17,26 @@ function Shoes() {
     getData()
   }, [])
 
+
+  function deleteshoe(id) {
+    const newList = shoes.filter(shoe => shoe.id !== id)
+    setShoes(newList)
+  }
+
   return (
     <div className="row row-cols-1 row-cols-md-3 g-4 w-150 h-70">
         {shoes.map(shoe => {
           const u = shoe.url
           const id = shoe.id
             return (
-              <div key={shoe.href} className="col">
-                <div class="card">
+              <div key={id} className="col">
+                <div className="card">
                   <img src={u} className="card-img-top" alt="shoe" width="20" height="300" />
                   <div className="card-body">
                     <h5 className="card-title">{ shoe.manufacturer }</h5>
                     <p className="card-text">{ shoe.color }</p>
-                    <a href="http://localhost:8080/api/shoes/${id}" className="btn btn-primary">Delete</a>
+                    {/* <a href="http://localhost:8080/api/shoes/${id}" className="btn btn-primary">Delete</a> */}
+                    <button onClick={() => deleteshoe(id)}> Delete </button>
                   </div>
                 </div>
               </div>
