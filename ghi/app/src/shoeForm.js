@@ -36,9 +36,8 @@ function ShoeForm() {
         'Content-Type': 'application/json',
       },
     };
-
+      console.log(formData)
     const response = await fetch(shoeUrl, fetchConfig);
-    console.log(response)
     if (response.ok) {
       setFormData({
         manufacturer: '',
@@ -89,7 +88,7 @@ function ShoeForm() {
                 <option value="">Choose a bin</option>
                 {bins.map(bin => {
                   return (
-                    <option key={bin.id} value={bin.id}>{bin.closet_name}</option>
+                    <option key={bin.id} value={bin.href}>{bin.closet_name}</option>
                   )
                 })}
               </select>
