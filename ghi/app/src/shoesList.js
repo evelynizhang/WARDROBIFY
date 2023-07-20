@@ -30,7 +30,7 @@ function ShoesList() {
       <tbody>
         {shoes.map(shoe => {
           return (
-            <tr key={shoe.href}>
+            <tr key={shoe.id}>
               <td>{ shoe.manufacturer }</td>
               <td>{ shoe.model_name }</td>
               <td>{ shoe.color }</td>
