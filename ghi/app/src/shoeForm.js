@@ -36,7 +36,7 @@ function ShoeForm() {
         'Content-Type': 'application/json',
       },
     };
-      console.log(formData)
+
     const response = await fetch(shoeUrl, fetchConfig);
     if (response.ok) {
       setFormData({
